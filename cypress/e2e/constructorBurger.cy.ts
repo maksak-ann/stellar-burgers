@@ -72,6 +72,9 @@ describe('оформление заказа', () => {
     cy.get(`[data-cy='order-button']`).click();
     cy.wait('@createOrder').then((interception) => {
       expect(interception.response.statusCode).to.eq(200);
+      const responseBody = interception.response.body;
+      expect(responseBody).to.have.property('order');
+      expect(responseBody.order).to.have.property('number', 38483);
     });
     cy.get('@modal').find('h2').contains('38483');
   });
